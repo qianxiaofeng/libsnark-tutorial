@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 2.8)
 
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 project(libsnark-tutorial)
 
 set(
@@ -72,7 +75,15 @@ if("${MULTICORE}")
   add_definitions(-DMULTICORE=1)
 endif()
 
+add_definitions(-DWITH_PROCPS=OFF)
+add_definitions(-DWITH_SUPERCOP=OFF)
+
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OPT_FLAGS}")
+
+set(ENV{LD_LIBRARY_PATH} "/usr/local/opt/openssl/lib:$ENV{LD_LIBRARY_PATH}")
+set(ENV{PKG_CONFIG_PATH} "/usr/local/opt/openssl/lib/pkgconfig:$ENV{PKG_CONFIG_PATH}")
+add_link_options(-L/usr/local/opt/openssl/lib)
+
 
 include(FindPkgConfig)
 if("${WITH_PROCPS}")
